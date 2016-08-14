@@ -4,4 +4,21 @@
   <artifactId>extracredit</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>ProjectManagementSystem</name>
+  <dependencies>
+  <dependency>
+  <groupId>mysql</groupId>
+  <artifactId>mysql-connector-java</artifactId>
+  <version>5.1.6</version>
+</dependency>
+ <dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-entitymanager</artifactId>
+  		<version>5.1.0.Final</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate.javax.persistence</groupId>
+  		<artifactId>hibernate-jpa-2.1-api</artifactId>
+  		<version>1.0.0.Final</version>
+  	</dependency>
+  </dependencies>
 </project>
