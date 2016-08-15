@@ -25,6 +25,10 @@ public class Project {
 	@Enumerated(EnumType.STRING)
 	private  Status status;
 	
+	@OneToOne
+	@JoinColumn(name="admin_id")
+	private Admin createdBy;
+	
 	public Project(){
 		
 	}
@@ -83,6 +87,14 @@ public class Project {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public Admin getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Admin createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 	

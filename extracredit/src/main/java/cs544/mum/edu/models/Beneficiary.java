@@ -11,6 +11,9 @@ public class Beneficiary {
 	private String beneficiaryName;
 	
 	private String description;
+	
+	@ManyToOne
+	private Project project;
     
 	public Beneficiary (){
 		
@@ -37,6 +40,12 @@ public class Beneficiary {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
 	}
 	
 	

@@ -22,6 +22,9 @@ public class Task {
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	
+	@OneToOne
+	private Project project;
     
 	public Task(){
 		
@@ -72,6 +75,12 @@ public class Task {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
 	}
 	
 	
