@@ -1,18 +1,16 @@
 package cs544.mum.edu.models;
 
 import java.util.Date;
+
 import javax.persistence.*;
 
-
 @Entity
-public class Project {
+public class Task {
 	
 	@Id @GeneratedValue
 	private int id;
 	
-	private String projectName;
-	
-	private String description;
+	private String taskName;
 	
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
@@ -20,15 +18,14 @@ public class Project {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	private String projectLocation;
+	private String neededResources;
 	
 	@Enumerated(EnumType.STRING)
-	private  Status status;
-	
-	public Project(){
+	private Status status;
+    
+	public Task(){
 		
 	}
-
 	public int getId() {
 		return id;
 	}
@@ -37,20 +34,12 @@ public class Project {
 		this.id = id;
 	}
 
-	public String getProjectName() {
-		return projectName;
+	public String getTaskName() {
+		return taskName;
 	}
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
 	}
 
 	public Date getStartDate() {
@@ -69,12 +58,12 @@ public class Project {
 		this.endDate = endDate;
 	}
 
-	public String getProjectLocation() {
-		return projectLocation;
+	public String getNeededResources() {
+		return neededResources;
 	}
 
-	public void setProjectLocation(String projectLocation) {
-		this.projectLocation = projectLocation;
+	public void setNeededResources(String neededResources) {
+		this.neededResources = neededResources;
 	}
 
 	public Status getStatus() {
@@ -84,6 +73,8 @@ public class Project {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+	
 	
 	
 
