@@ -7,6 +7,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import cs544.mum.edu.models.Project;
 import cs544.mum.edu.models.Task;
+import cs544.mum.edu.models.Volunteer;
 
 public class HibernateUtil {
 private static final SessionFactory sessionFactory;
@@ -17,6 +18,7 @@ private static final SessionFactory sessionFactory;
 			Configuration configuration = new Configuration();
 			configuration.addAnnotatedClass(Project.class);
 			configuration.addAnnotatedClass(Task.class);
+			configuration.addAnnotatedClass(Volunteer.class);
 			configuration.configure();
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 					.applySettings(configuration.getProperties()).build();

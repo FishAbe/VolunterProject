@@ -125,7 +125,7 @@ public class Project {
 		return success;
 	}
 
-	public boolean removeFlight(Task task) {
+	public boolean removeTask(Task task) {
 		boolean success = false;
 		if (tasks.remove(task)) {
 			task.setProject(null);

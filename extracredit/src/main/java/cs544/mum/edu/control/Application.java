@@ -6,6 +6,8 @@ import cs544.mum.edu.dataaccess.ProjectDAO;
 import cs544.mum.edu.models.Project;
 import cs544.mum.edu.models.Status;
 import cs544.mum.edu.models.Task;
+import cs544.mum.edu.models.UserRole;
+import cs544.mum.edu.models.Volunteer;
 
 public class Application {
 	private static ProjectDAO _projectDao = new ProjectDAO();
@@ -19,9 +21,9 @@ public class Application {
 	public static void populateProjects() {
 		
 		try {
-			List<Project> projects=_projectDao.getProjectByStatus(Status.TODO);
-			for(Project project : projects){
-			       System.out.println("Project Name"+project.getProjectName());
+			List<Task> tasks=_projectDao.getTasksByProjectId(2);
+			for(Task task : tasks){
+			       System.out.println("Project Name"+task.getTaskName());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -39,15 +41,33 @@ public class Application {
 	    project.setProjectLocation("IOWA");
 	    project.setStatus(Status.TODO);
 	    
+	    
+	    Volunteer volunteer = new Volunteer();
+	    volunteer.setFirstName("Fisseha");
+	    volunteer.setLastName("Chari");
+	    volunteer.setDescription("this is volunteer description");
+	    volunteer.setUserRole(UserRole.VOLUNTEER);
+	    
+	    
 	    Task task = new Task();
 	    task.setTaskName("Task1");
 	    task.setStartDate("11/10/2015");
 	    task.setEndDate("10/10/2016");
 	    task.setNeededResources("List of needed Resources");
 	    task.setStatus(Status.TODO);
-	    //task.setProject(project);
+	    task.setVolunter(volunteer);
+	    
+	    Task task2 = new Task();
+	    task.setTaskName("Task2");
+	    task.setStartDate("11/10/2016");
+	    task.setEndDate("10/10/2018");
+	    task.setNeededResources("List of needed Resources");
+	    task.setStatus(Status.TODO);
+	    task.setVolunter(volunteer);
 	    
 	    project.addTask(task);
+	    project.addTask(task2);
+	    
 	    
 	    try {
 			_projectDao.addTask(task);

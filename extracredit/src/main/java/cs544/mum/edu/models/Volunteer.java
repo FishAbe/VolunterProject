@@ -6,14 +6,58 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("Volunteer")
-public class Volunteer extends User {
+public class Volunteer {
+
+	@Id
+	@GeneratedValue
+	private int id;
+
+	private String firstName;
+
+	private String lastName;
+
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
 	
 	private String description;
-	
-	@OneToMany
-	@JoinColumn(name="taskId")
-	private List<Task> workson = new ArrayList<Task>();
+
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Task task;
+    
+	public Volunteer(){
+		
+	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
 
 	public String getDescription() {
 		return description;
@@ -23,14 +67,14 @@ public class Volunteer extends User {
 		this.description = description;
 	}
 
-	public List<Task> getWorkson() {
-		return workson;
+	public Task getTask() {
+		return task;
 	}
 
-	public void setWorkson(List<Task> workson) {
-		this.workson = workson;
+	public void setTask(Task task) {
+		this.task = task;
 	}
-	
+
 	
 
 }
