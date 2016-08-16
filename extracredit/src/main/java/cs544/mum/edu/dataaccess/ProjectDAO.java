@@ -35,22 +35,7 @@ public class ProjectDAO {
 		}
 		
 	}
-	public void addTask(Task task) throws Exception{
-
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
-		
-		try{
-			tx = session.beginTransaction();
-			session.persist(task);
-			tx.commit();
-			
-		}catch (Exception e) {
-			if(tx!=null) tx.rollback();
-			e.printStackTrace();
-			throw new Exception(e);
-		}
-	}
+	
 	
 	/***
 	 *  Gets list of projects in the database
@@ -88,47 +73,20 @@ public class ProjectDAO {
 	public Project getProjectById(int projectId) throws Exception{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = null;
-		Project project = new Project();
+		
 		try{
 			tx = session.beginTransaction();
-			Query projectQuery = session.createQuery("FROM Project p WHERE p.projectId = :id");
-			projectQuery.setParameter("id", projectId);
-			
-			project = (Project) projectQuery;
+			Project project = session.get(Project.class,projectId);
 			tx.commit();
-			
+			return project;
 		}catch (Exception e) {
 			if(tx!=null) tx.rollback();
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		return project;
+		
 	}
-	/**
-	 * This method returns list of tasks for the provided project id
-	 * @param status
-	 * @return
-	 * @throws Exception
-	 */
-	public List<Task> getTasksByProjectId(int projectId) throws Exception{
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
-		List<Task> tasks = new ArrayList<Task>();
-		try{
-			tx = session.beginTransaction();
-			Query tasktQuery = session.createQuery("FROM Task p WHERE p.project.id = :id");
-			tasktQuery.setParameter("id", projectId);
-			
-			tasks = tasktQuery.list();
-			tx.commit();
-			
-		}catch (Exception e) {
-			if(tx!=null) tx.rollback();
-			e.printStackTrace();
-			throw new Exception(e);
-		}
-		return tasks;
-	}
+	
 	/**
 	 * Search Projects from the database based on the 
 	 * provided location information

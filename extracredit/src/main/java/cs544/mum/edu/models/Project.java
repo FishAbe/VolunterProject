@@ -106,6 +106,14 @@ public class Project {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+   
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
 
 	/*public Admin getCreatedBy() {
 		return createdBy;
