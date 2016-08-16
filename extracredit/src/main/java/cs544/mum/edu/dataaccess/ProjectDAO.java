@@ -3,6 +3,7 @@ package cs544.mum.edu.dataaccess;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -55,15 +56,33 @@ public class ProjectDAO {
 	 * @return Projects
 	 */
 	public List<Project> getAllProjects(){
+		
 		return new ArrayList<Project>();
 	}
 	/**
 	 * Filters projects based on the provided status
 	 * @param status
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Project> getProjectByStatus(Status status){
-		return new ArrayList<Project>();
+	public List<Project> getProjectByStatus(Status status) throws Exception{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		List<Project> projects = new ArrayList<Project>();
+		try{
+			tx = session.beginTransaction();
+			Query projectQuery = session.createQuery("FROM Project p WHERE p.status = :status");
+			projectQuery.setParameter("status", status);
+			
+			projects = projectQuery.list();
+			tx.commit();
+			
+		}catch (Exception e) {
+			if(tx!=null) tx.rollback();
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		return projects;
 	}
 	/**
 	 * Search Projects from the database based on the 

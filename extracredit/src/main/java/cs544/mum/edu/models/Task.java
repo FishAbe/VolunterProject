@@ -1,6 +1,9 @@
 package cs544.mum.edu.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.persistence.*;
 
@@ -23,8 +26,12 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@OneToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
+/*	@JoinColumn(name="project_Id")*/
 	private Project project;
+	
+	private static DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT,
+			Locale.US);
     
 	public Task(){
 		
@@ -45,20 +52,30 @@ public class Task {
 		this.taskName = taskName;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getStartDate() {
+		return df.format(startDate);
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(String startDate) {
+		try {
+			this.startDate = df.parse(startDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public String getEndDate() {
+		return df.format(endDate);
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(String endDate) {
+		try {
+			this.endDate = df.parse(endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getNeededResources() {

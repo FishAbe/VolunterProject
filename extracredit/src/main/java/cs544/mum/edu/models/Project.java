@@ -1,9 +1,13 @@
 package cs544.mum.edu.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import javax.persistence.*;
-
-
 @Entity
 public class Project {
 	
@@ -25,10 +29,14 @@ public class Project {
 	@Enumerated(EnumType.STRING)
 	private  Status status;
 	
-	@OneToOne
-	@JoinColumn(name="admin_id")
-	private Admin createdBy;
+	@OneToMany(mappedBy ="project")
+	private List<Task> tasks = new ArrayList<Task>();;
 	
+	/*@OneToOne
+	@JoinColumn(name="admin_id")
+	private Admin createdBy;*/
+	private static DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT,
+			Locale.US);
 	public Project(){
 		
 	}
@@ -57,20 +65,30 @@ public class Project {
 		this.description = description;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getStartDate() {
+		return df.format(startDate);
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(String startDate) {
+		try {
+			this.startDate = df.parse(startDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public String getEndDate() {
+		return df.format(endDate);
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(String endDate) {
+		try {
+			this.endDate = df.parse(endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getProjectLocation() {
@@ -89,14 +107,32 @@ public class Project {
 		this.status = status;
 	}
 
-	public Admin getCreatedBy() {
+	/*public Admin getCreatedBy() {
 		return createdBy;
 	}
 
 	public void setCreatedBy(Admin createdBy) {
 		this.createdBy = createdBy;
+	}*/
+	/* Collections Methods */
+	public boolean addTask(Task task) {
+		
+		boolean success = false;
+		if (tasks.add(task)) {
+			task.setProject(this);
+			success = true;
+		}
+		return success;
 	}
-	
+
+	public boolean removeFlight(Task task) {
+		boolean success = false;
+		if (tasks.remove(task)) {
+			task.setProject(null);
+			success = true;
+		}
+		return success;
+	}
 	
 
 }

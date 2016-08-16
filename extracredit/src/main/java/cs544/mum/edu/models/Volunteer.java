@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@DiscriminatorValue("Volunteer")
 public class Volunteer extends User {
 	
 	private String description;

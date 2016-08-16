@@ -1,6 +1,6 @@
 package cs544.mum.edu.control;
 
-import java.util.Date;
+import java.util.List;
 
 import cs544.mum.edu.dataaccess.ProjectDAO;
 import cs544.mum.edu.models.Project;
@@ -11,35 +11,43 @@ public class Application {
 	private static ProjectDAO _projectDao = new ProjectDAO();
 
 	public static void main(String[] args) {
-		AddProject();
+		//AddProject();
+		populateProjects();
 
 	}
 	
+	public static void populateProjects() {
+		
+		try {
+			List<Project> projects=_projectDao.getProjectByStatus(Status.TODO);
+			for(Project project : projects){
+			       System.out.println("Project Name"+project.getProjectName());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public static void AddProject(){
 		Project project = new Project();
 		project.setProjectName("ProjectName1");
 		project.setDescription("This is description about the project");
-		Date startDate = new Date(2014, 10, 24);
-		project.setStartDate(startDate);
-		Date endDate = new Date(2016, 10, 24);
-	    project.setEndDate(endDate);
-		
+		project.setStartDate("12/12/2014");
+	    project.setEndDate("12/12/2016");
+		   
 	    project.setProjectLocation("IOWA");
 	    project.setStatus(Status.TODO);
 	    
-	    try {
-			_projectDao.AddProject(project);
-			System.out.println("Project Added");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	    
 	    Task task = new Task();
 	    task.setTaskName("Task1");
-	    task.setStartDate(startDate);
-	    task.setEndDate(endDate);
+	    task.setStartDate("11/10/2015");
+	    task.setEndDate("10/10/2016");
 	    task.setNeededResources("List of needed Resources");
-	    task.setProject(project);
+	    task.setStatus(Status.TODO);
+	    //task.setProject(project);
+	    
+	    project.addTask(task);
 	    
 	    try {
 			_projectDao.addTask(task);
